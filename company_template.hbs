@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ company_name }} Report</title>
+    <title>Report</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,22 +33,35 @@
     </style>
 </head>
 <body>
-    <h1>{{ company_name }} Report</h1>
+    <h1>{{#each data.summary}}   
+        {{#if 'data.summary.this==data.summary.Basic Company Information'}}  
+        {{{[Company Name]}}}{{/if}}{{/each}}  Report</h1>
+    
     <div class="section">
         <h2>Basic Information</h2>
-        <p><strong>Website URL:</strong> <a href="{{ basic_info.website_url }}">{{ basic_info.website_url }}</a></p>
-        <p><strong>LinkedIn URL:</strong> <a href="{{ basic_info.linkedin_url }}">{{ basic_info.linkedin_url }}</a></p>
-        <p><strong>Logo:</strong> <img src="{{ basic_info.logo }}" alt="Company Logo"></p>
+        {{#each data.summary}}    
+        {{#if 'data.summary.this==data.summary.Basic Company Information'}}
+        <p><strong>Website URL:</strong> <a href="{{{[Website URL}}}">{{{[Website URL}}}</a></p>
+        <p><strong>LinkedIn URL:</strong> <a href="{{{[LinkedIn URL]}}}">{{{[LinkedIn URL]}}}</a></p>
+        <p><strong>Logo:</strong> <img src="{{{[Logo]}}}" alt="Company Logo"></p>
+        {{/if}}
+        {{/each}}     
     </div>
+   
     <div class="section">
         <h2>Company Overview</h2>
-        <p><strong>Description:</strong> {{ overview.description }}</p>
-        <p><strong>Mission Statement:</strong> {{ overview.mission_statement }}</p>
-        <p><strong>Founding Date:</strong> {{ overview.founding_date }}</p>
-        <p><strong>Founders:</strong> {{ overview.founders | join(', ') }}</p>
-        <p><strong>Headquarters:</strong> {{ overview.headquarters }}</p>
-        <p><strong>Industry:</strong> {{ overview.industry | join(', ') }}</p>
+        {{#each data.summary}}
+        {{#if 'data.summary.this==data.summary.Company Overview'}}
+        <p><strong>Description:</strong> {{{[Description]}}}</p>
+        <p><strong>Mission Statement:</strong> {{{[Mission Statement]}}} </p>
+        <p><strong>Founding Date:</strong>{{{[Founding Date]}}}</p>
+        <p><strong>Founders:</strong> {{{[Founders]}}}</p>
+        <p><strong>Headquarters:</strong> {{{[Headquarters]}}}</p>
+        <p><strong>Industry:</strong> {{Industry}}</p>
+        {{/if}}
+        {{/each}}
     </div>
+
     <div class="section">
         <h2>Products and Services</h2>
         <h3>Products</h3>
@@ -62,14 +75,16 @@
                 </tr>
             </thead>
             <tbody>
-                {% for product in products %}
+                {{#each data.summary}}
+                {{#each this.Products}}
                 <tr>
-                    <td>{{ product.product_name }}</td>
-                    <td>{{ product.description }}</td>
-                    <td>{{ product.category }}</td>
-                    <td>{{ product.features | join(', ') }}</td>
+                    <td>{{{[Product Name]}}}</td>
+                    <td>{{Description}}</td>
+                    <td>{{Category}} </td>
+                    <td>{{Features}}</td>
                 </tr>
-                {% endfor %}
+                {{/each}} 
+                {{/each}}
             </tbody>
         </table>
         <h3>Services</h3>
@@ -83,37 +98,76 @@
                 </tr>
             </thead>
             <tbody>
-                {% for service in services %}
+                {{#each data.summary}}
+                {{#each this.Services}}
                 <tr>
-                    <td>{{ service.service_name }}</td>
-                    <td>{{ service.description }}</td>
-                    <td>{{ service.category }}</td>
-                    <td>{{ service.features | join(', ') }}</td>
+                    <td>{{{[Service Name]}}}</td>
+                    <td>{{Description}}</td>
+                    <td>{{Category}} </td>
+                    <td>{{Features}}</td>
                 </tr>
-                {% endfor %}
+                {{/each}} 
+                {{/each}}
             </tbody>
         </table>
     </div>
+    
+
+
     <div class="section">
         <h2>Technologies</h2>
-        {% for tech in technologies %}
-        <p><strong>{{ tech.technology_name }}:</strong> {{ tech.application }}</p>
-        <p><strong>Partnerships:</strong> {{ tech.partnerships | join(', ') }}</p>
-        {% endfor %}
+         {{#each data.summary.Technologies}}
+        {{#each this}}
+        <p><strong>{{{[Technology Name]}}} :</strong> {{{[Application]}}}</p>
+        <p><strong>Partnerships:</strong>{{{[Partnerships]}}}</p>
+        {{/each}}
+        {{/each}}                   
+    
     </div>
     <div class="section">
         <h2>Leadership and Team</h2>
-        <p><strong>CEO:</strong> {{ leadership.ceo }}</p>
-        <p><strong>Leadership Team:</strong> {{ leadership.leadership_team | join(', ') }}</p>
-        <p><strong>Employee Count:</strong> {{ leadership.employee_count }}</p>
-        <p><strong>Company Culture:</strong> {{ leadership.company_culture }}</p>
+        {{#each data.summary}}
+        {{#if 'data.summary.this==data.summary.Leadership and Team'}}
+    
+        <p><strong>CEO:</strong> {{CEO}}</p>
+        <p><strong>Leadership Team:</strong> {{{[Leadership Team]}}}</p>
+        <p><strong>Employee Count:</strong> {{{[Employee Count]}}}</p>
+        <p><strong>Company Culture:</strong> {{{[Company Culture]}}}</p>
+
+        {{/if}}
+        {{/each}}                   
+    
     </div>
     <div class="section">
         <h2>Social Media Presence</h2>
-        <p><strong>LinkedIn:</strong> <a href="{{ social_media.linkedin }}">{{ social_media.linkedin }}</a></p>
-        <p><strong>Twitter:</strong> <a href="{{ social_media.twitter }}">{{ social_media.twitter }}</a></p>
-        <p><strong>Facebook:</strong> <a href="{{ social_media.facebook }}">{{ social_media.facebook }}</a></p>
-        <p><strong>Instagram:</strong> <a href="{{ social_media.instagram }}">{{ social_media.instagram }}</a></p>
+        {{#each data.summary}}
+        {{#if 'data.summary.this==data.summary.Social Media Presence'}}
+    
+        <p><strong>LinkedIn:</strong> <a href="{{LinkedIn}}">{{LinkedIn}}</a></p>
+        <p><strong>Twitter:</strong> <a href="{{Twitter}}">{{Twitter}}</a></p>
+        <p><strong>Facebook:</strong> <a href="{{Facebook}}">{{Facebook}}</a></p>
+        <p><strong>Instagram:</strong> <a href="{{Instagram}}">{{Instagram}}</a></p>
+
+        {{/if}}
+        {{/each}}                   
+    
     </div>
+
+    <div class="section">
+        <h2>News and Updates</h2>
+        {{#each data.summary}}
+        {{#if 'data.summary.this==data.summary.News and Updates'}}
+        {{#each this}}
+        <p><strong>Title:</strong> <a href="{{Title}}">{{Title}}</a></p>
+        <p><strong>Date:</strong> {{Date}}</p>
+        <p><strong>Source:</strong> {{Source}}</p>
+        <p><strong>Summary:</strong> {{Summary}}</p>
+
+        {{/each}}
+        {{/if}}                   
+        {{/each}}
+    </div> 
+
+
 </body>
 </html>
